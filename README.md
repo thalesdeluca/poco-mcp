@@ -11,11 +11,23 @@ Free alternative to AltTester Desktop (no broker, no license).
 
 ## Unity setup
 
-1. Vendor `Unity3D/` from Poco-SDK into `Assets/Scripts/Poco/` (keep `uguiWithTMPro`, drop `ngui` / `ugui` / `fairygui`).
-2. Attach `PocoManager` to a GameObject (Main Camera works).
-3. Attach `PocoUIClickExtension` to the same GameObject.
-4. In the Inspector, drag the `PocoUIClickExtension` component into `PocoManager.pocoListenersBase`.
-5. Press Play — Unity listens on `:5001`.
+The `ui_*` tools require the companion SDK fork that ships `PocoUIClickExtension` and a one-click installer menu item.
+
+1. Vendor the SDK fork under `Assets/Scripts/Poco/`:
+
+   ```bash
+   git clone --depth 1 --branch feat/ui-click-executeevents \
+     https://github.com/thalesdeluca/Poco-SDK.git tmp-poco
+   mkdir -p <UnityProject>/Assets/Scripts/Poco
+   cp -r tmp-poco/Unity3D/* <UnityProject>/Assets/Scripts/Poco/
+   rm -rf <UnityProject>/Assets/Scripts/Poco/{ngui,ugui,fairygui}
+   rm -rf tmp-poco
+   ```
+
+2. Open Unity. From the menu: **Tools → Poco → Setup Current Scene**. This attaches `PocoManager` + `PocoUIClickExtension` to the Main Camera and wires `PocoManager.pocoListenersBase` for you.
+3. Press Play — Unity listens on `:5001`.
+
+If you only want the vanilla (non-`ui_*`) tools, upstream [AirtestProject/Poco-SDK](https://github.com/AirtestProject/Poco-SDK) works — you'll just need to attach `PocoManager` manually.
 
 ## MCP client setup
 
